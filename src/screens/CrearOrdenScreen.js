@@ -45,7 +45,9 @@ export default class CrearOrden extends React.Component {
     anim: new Animated.Value(0),
     formState: FORM_STATES.LOGIN,
     isKeyboardVisible: false,
-    isLoading:true
+    isLoading:true,
+    hack:0,
+    cantidad:1
   };
 
   componentWillMount() {
@@ -91,31 +93,27 @@ export default class CrearOrden extends React.Component {
     };
   }
   _getWhereHouseAsync = async () =>{
-  
     return await this.props.OrdenStateActions.getWhereHouse();
   }
-
-
   handleEmail = (e) =>{
-
     this.props.authStateActions.setEmail(e.nativeEvent.text)
   }
-
   handlePassword = (e) =>{
-
     this.props.authStateActions.setPassword(e.nativeEvent.text)
   }
 _handleFinishLoading = () =>{
-  this.setState({isLoading:false})
+this.setState({isLoading:false})
 }
 _handleDestino = (e) =>{
-console.log('handleDestino',e);
-this.props.OrdenStateActions.setDestino(e);
-console.log('the props',this.props);
+this.props.OrdenStateActions.setDestino(e)
 }
 _handleCategory = (e) =>{
-  this.props.OrdenStateActions.setCategory(e);
-  console.log('the props',this.props);
+  switch(e){
+    case "zanahoria":
+    this.setState({hack:0})
+    case "lentejas":
+    this.setState({hack:1})
+  }
 
 }
 crearOrdenAsyn = () =>{
@@ -125,18 +123,15 @@ crearOrdenAsyn = () =>{
    const catData = products.filter(item=> item.category===category)
    const whereHousesParse = JSON.parse(this.props.ordenState['whereHouses'])
    const wHData = whereHousesParse.filter(item=>item.name===destino);
-   const shipmentContent ={category:catData[0].category,product:catData[0].product,quantity:this.state.cantidad}
-   const postData = {shipment_content:shipmentContent,destiny_id:wHData[0].id,user_id:id}
+  //  const shipmentContent ={category:catData[0].category,product:catData[0].product,quantity:this.state.cantidad}
+   const postData = {shipment_content:this.state.hack,destiny_id:wHData[0].id,user_id:id,quantity:this.state.cantidad}
   //  shipment_content:shipmentContent
+
    let headers = { 
     'Accept': 'application/json',
     'Content-Type': 'application/json'
   }
 
- 
-
-   console.log('checking for orderState',catData);
- 
    let post = JSON.stringify(postData)
    console.log('looking out',post);
    fetch('https://shipment-monitoring.herokuapp.com/api/shipment/create',

@@ -5,6 +5,7 @@ const initialState = {
  whereHouses:'here are the where house',
  destino:'Tijuana',
  category:'hortaliza',
+ allOrders:{}
 
 };
 
@@ -13,6 +14,7 @@ const SET_DESTINO = 'AuthState/SET_DESTINO';
 const SET_CATEGORY = 'AuthState/SET_CATEGORY'
 const GET_WHEREHOUSE = 'AuthState/GET_WHEREHOUSE';
 const RESET_ORDEN_STATE = 'AuthState/RESET_ORDEN_STATE';
+const GET_ALL_ORDERS = 'AuthState/GET_ALL_ORDERS';
 export const getWhereHouse =  () => async dispatch => {
 console.log('que rollo perra');
 
@@ -32,6 +34,16 @@ export function resetOrdenState(){
     type:RESET_ORDEN_STATE
   }
 }
+export function getAllOrders(response){
+  return{
+    type:GET_ALL_ORDERS,
+    response
+
+  }
+}
+
+
+
 
 export function getWhereHouses(response){
   return{
@@ -73,6 +85,10 @@ case RESET_ORDEN_STATE:
 return Object.assign({}, state, {
     category:'hortaliza',destino:'Tijuana'
     });
+case GET_ALL_ORDERS:
+return Object.assign({}, state, {
+  allOrders:action.response
+  });
     default:
       return state;
   }

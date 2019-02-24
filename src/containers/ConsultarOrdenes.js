@@ -3,18 +3,18 @@ import { bindActionCreators } from 'redux';
 import { compose } from 'recompose';
 
 
-import * as AuthStateActions from '../reducers/auth';
+import * as OrdenStateActions from '../reducers/CrearOrden';
 import ConsultarOrdenes from '../screens/ConsultarOrdenes';
 
 
 
 const mapStateToProps =state => ({
   authState: state.auth,
-  navigatorState: state.navigation,
+  ordenState: state.orden
 })
 
 const mapDispatch = dispatch => ({
-  authStateActions: bindActionCreators(AuthStateActions, dispatch),
+  authStateActions: bindActionCreators(OrdenStateActions, dispatch),
 })
 
 export default 

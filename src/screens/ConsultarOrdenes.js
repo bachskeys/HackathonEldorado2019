@@ -11,7 +11,8 @@ import {
   TouchableOpacity,
   ImageBackground,
   Dimensions,
-  FlatList
+  FlatList,
+  ScrollView
 } from 'react-native';
 
 
@@ -42,29 +43,35 @@ export default class ConsultarOrdenes extends React.Component {
     .then(res=>{console.log('response in redux',res['_bodyInit'])
     let response=JSON.parse(res['_bodyInit']);
         this.setState({data:response})
+        this.props.authStateActions.getAllOrders([response]);
     })
     .catch(e=>console.log('error',e))
   }
 
  
   render() {
+ console.log('checking props',this.props);
+ const{ordenState:{allOrders}}=this.props
  
 
     return (
+<ScrollView>
     <View style={[styles.container]} >
  {this.state.data.map((item,key)=>{
-     console.log('logging map',item)
-return  <View><Button
+return  <View>
+        <Button
         rounded
         secondary
         style={styles.item}
         caption={item.folio}
+        onPress={()=>console.log('this is a click')}
         />
         </View>
  })}
         
     
     </View>
+    </ScrollView>
     );
   }
 }
