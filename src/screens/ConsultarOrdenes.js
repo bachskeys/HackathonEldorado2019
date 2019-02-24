@@ -37,6 +37,13 @@ export default class ConsultarOrdenes extends React.Component {
     return await this.loadDataAsync();
    
   }
+  componentWillReceiveProps(prevProps){
+      if(prevProps.navigation.state.params!==this.props.navigation.state.params){
+          console.log('reRender');
+          this.loadDataAsync();
+      }
+
+  }
 
   loadDataAsync = async () =>{
     await fetch('https://shipment-monitoring.herokuapp.com/api/shipment/get-all')
@@ -47,11 +54,15 @@ export default class ConsultarOrdenes extends React.Component {
     })
     .catch(e=>console.log('error',e))
   }
+  handleButton = async (folio) =>{
+  await this.props.authStateActions.setNavFolio(folio);    
+  this.props.navigation.navigate('Detalle',{navFolio:folio})
+  }
 
  
   render() {
- console.log('checking props',this.props);
  const{ordenState:{allOrders}}=this.props
+ {this.loadDataAsync}
  
 
     return (
@@ -64,7 +75,7 @@ return  <View>
         secondary
         style={styles.item}
         caption={item.folio}
-        onPress={()=>console.log('this is a click')}
+        onPress={()=>this.handleButton(item.folio)}
         />
         </View>
  })}

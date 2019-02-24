@@ -14,6 +14,8 @@ import AuthScreen from '../containers/AuthScreen';
 
 import { Colors, Fonts } from '../constants';
 import CrearOrden from '../containers/CrearOrdenScreen';
+import Detalle from '../containers/Detalle';;
+import WebViewComponent from '../containers/WebView';
 
 const headerBackground = require('../../assets/images/Landscape.png');
 
@@ -77,6 +79,19 @@ const auth = createStackNavigator(
                 header: null,
             },
         },
+        Detalle: {
+            screen: Detalle,
+            navigationOptions: {
+                header: null,
+            },
+        },
+        WebView: {
+            screen: WebViewComponent,
+            navigationOptions: {
+                header: null,
+            },
+        },
+        // Ga
         // Gallery: {
         //     screen: GalleryScreen,
         //     navigationOptions: {

@@ -41,10 +41,10 @@ navigate(isLoggedIn?"app":'notAuth')
             source={consultarOrdenesIcon}
             style={styles.itemImage}
           />
-          <Text style={styles.itemText}>Consultar ordenes</Text>
+          <Text style={styles.itemText}>Consultar Dispositivo</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate({routeName: 'Despachar orden'})}
+          onPress={() => props.navigation.navigate({routeName: 'WebView'})}
           style={styles.item}>
           <Image
             resizeMode="contain"

@@ -141,7 +141,7 @@ crearOrdenAsyn = () =>{
    if(response.message==="Server Error"){
      console.log('errorrrr');
    }else{
-    //  this.props.navigation.navigate('Ordenes')
+     this.props.navigation.navigate('Ordenes',{folio:response.folio})
    }
   })
 
