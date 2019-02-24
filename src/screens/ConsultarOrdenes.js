@@ -14,6 +14,7 @@ import {
   FlatList,
   ScrollView
 } from 'react-native';
+import Moment from 'moment';
 
 
 import { Fonts, Colors } from '../constants';
@@ -71,10 +72,11 @@ export default class ConsultarOrdenes extends React.Component {
  {this.state.data.map((item,key)=>{
 return  <View>
         <Button
-        rounded
+        style={{width: '80%', marginBottom: 0}}
+        //rounded
         secondary
         style={styles.item}
-        caption={item.folio}
+        caption={item.folio+' - '+Moment(item.created_at).format('DD MMM HH:mm')}
         onPress={()=>this.handleButton(item.folio)}
         />
         </View>
