@@ -68,7 +68,17 @@ export default class ConsultarOrdenes extends React.Component {
 
     return (
 <ScrollView>
+
     <View style={[styles.container]} >
+    <Text style={{fontSize: 18, marinTop:5}}>Embarques sin despachar</Text>
+    {/* <View
+        style={{
+          alignSelf:'center',
+          borderBottomColor: 'black',
+          borderBottomWidth: 1,
+          width: '60%'
+        }}
+      /> */}
  {this.state.data.map((item,key)=>{
 return  <View>
         <Button
