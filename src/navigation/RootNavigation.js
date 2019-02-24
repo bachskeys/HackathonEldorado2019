@@ -1,87 +1,122 @@
 import React from 'react';
-import { Image, TouchableOpacity } from 'react-native';
-import { createAppContainer, createStackNavigator } from 'react-navigation';
+import { Image, TouchableOpacity,View,Text,StyleSheet } from 'react-native';
+import { createAppContainer, createStackNavigator,createSwitchNavigator } from 'react-navigation';
+
 
 import MainTabNavigator from './MainTabNavigator';
 
-import GalleryScreen from '../containers/GalleryScreen';
 
-// To use this screens please see the full version at https://reactnativestarter.com
-// import ProfileScreen from '../containers/ProfileScreen';
-// import ArticleScreen from '../containers/ArticleScreen';
-// import ChatScreen from '../containers/chat/ChatScreen';
-// import MessagesScreen from '../containers/chat/MessagesScreen';
-// import ChartsScreen from '../containers/ChartsScreen';
 
-import AvailableInFullVersion from '../screens/AvailableInFullVersion';
+import LogOutBtn from '../components/LogOutBtn';
+
+
+import AuthScreen from '../containers/AuthScreen';
 
 import { Colors, Fonts } from '../constants';
+import CrearOrden from '../containers/CrearOrdenScreen';
 
-const headerBackground = require('../../assets/images/topBarBg.png');
+const headerBackground = require('../../assets/images/Landscape.png');
 
-const stackNavigator = createStackNavigator(
+const styles = StyleSheet.create({
+    tabBarItemContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomWidth: 2,
+        borderBottomColor: Colors.white,
+        paddingHorizontal: 10,
+    },
+    tabBarIcon: {
+        width: 23,
+        height: 23,
+    },
+    tabBarIconFocused: {
+        tintColor: Colors.primary,
+    },
+    headerContainer: {
+        height: 70,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        paddingBottom: 10,
+    },
+    headerImage: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        height: 70,
+    },
+    headerCaption: {
+        fontFamily: Fonts.primaryRegular,
+        color: Colors.white,
+        fontSize: 18,
+    },
+});
+
+
+
+
+const auth = createStackNavigator(
     {
         Main: {
             screen: MainTabNavigator,
             navigationOptions: ({ navigation }) => {
                 return {
-                    title: 'React Native Starter',
+                    title: 'Embarques',
                     headerLeft: null,
                     headerBackground: (
-                        <Image
-                            style={{ flex: 1 }}
-                            source={headerBackground}
-                            resizeMode="cover"
-                        />
+                        <View style={{backgroundColor:'#383A40',height:80}}><Text style={{color:'white'}}>Embarques</Text></View>
                     ),
                 };
-            },
+            },         
         },
-        Profile: {
-            screen: AvailableInFullVersion,
+        CrearOrden: {
+            screen: CrearOrden,
             navigationOptions: {
                 header: null,
             },
         },
-        Gallery: {
-            screen: GalleryScreen,
-            navigationOptions: {
-                title: 'Gallery',
-            },
-        },
-        Article: {
-            screen: AvailableInFullVersion,
-            navigationOptions: {
-                header: null,
-            },
-        },
-        Chat: {
-            screen: AvailableInFullVersion,
-            navigationOptions: {
-                header: null,
-            },
-        },
-        Messages: {
-            screen: AvailableInFullVersion,
-            navigationOptions: {
-                header: null,
-            },
-        },
-        Charts: {
-            screen: AvailableInFullVersion,
-            navigationOptions: {
-                header: null,
-            },
-        },
+        // Gallery: {
+        //     screen: GalleryScreen,
+        //     navigationOptions: {
+        //         title: 'Gallery',
+        //     },
+        // },
+        // Article: {
+        //     screen: AvailableInFullVersion,
+        //     navigationOptions: {
+        //         header: null,
+        //     },
+        // },
+        // Chat: {
+        //     screen: AvailableInFullVersion,
+        //     navigationOptions: {
+        //         header: null,
+        //     },
+        // },
+        // Messages: {
+        //     screen: AvailableInFullVersion,
+        //     navigationOptions: {
+        //         header: null,
+        //     },
+        // },
+        // Charts: {
+        //     screen: AvailableInFullVersion,
+        //     navigationOptions: {
+        //         header: null,
+        //     },
+        // },
     },
     {
+        // defaultNavigationOptions: {title:'El dorito',header:<View style={{backgroundColor:'#383A40',height:80}}><Text style={{color:'white'}}>Embarques</Text></View>}
         defaultNavigationOptions: ({ navigation }) => {
             return {
                 titleStyle: {
                     fontFamily: Fonts.primaryLight,
                 },
                 headerStyle: {
-                    backgroundColor: Colors.primary,
+                    backgroundColor: '#383A40',
                     borderBottomWidth: 0,
                 },
                 headerBackground: (
@@ -103,18 +138,31 @@ const stackNavigator = createStackNavigator(
                             paddingLeft: 25,
                         }}
                     >
-                        <Image
-                            source={require('../../assets/images/icons/arrow-back.png')}
-                            resizeMode="contain"
-                            style={{
-                                height: 20,
-                            }}
-                        />
+                        <View style={{backgroundColor:'#383A40',height:80}}><Text style={{color:'white'}}>Embarques</Text></View>
                     </TouchableOpacity>
                 ),
             };
         },
+
     },
 );
 
-export default createAppContainer(stackNavigator);
+const noneAuthStack = createStackNavigator({
+    Main: {
+        screen: AuthScreen,
+        navigationOptions: {header: null,}
+    },
+})
+
+
+
+const AuthMiddleware=createSwitchNavigator(
+    {
+      app:auth,
+      notAuth:noneAuthStack
+    }
+)
+
+
+
+export default createAppContainer(AuthMiddleware);

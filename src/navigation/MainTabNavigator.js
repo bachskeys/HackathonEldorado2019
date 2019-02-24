@@ -10,6 +10,10 @@ import CalendarScreen from '../containers/CalendarScreen';
 import GridsScreen from '../containers/GridsScreen';
 import PagesScreen from '../containers/PagesScreen';
 import ComponentsScreen from '../containers/ComponentsScreen';
+import AuthScreen from '../containers/AuthScreen';
+import LogOutBtn from '../components/LogOutBtn';
+import CrearOrden from '../containers/CrearOrdenScreen';
+import ConsultarOrdenes from '../containers/ConsultarOrdenes';
 
 const iconHome = require('../../assets/images/tabbar/home.png');
 const iconCalendar = require('../../assets/images/tabbar/calendar.png');
@@ -17,7 +21,7 @@ const iconGrids = require('../../assets/images/tabbar/grids.png');
 const iconPages = require('../../assets/images/tabbar/pages.png');
 const iconComponents = require('../../assets/images/tabbar/components.png');
 
-const hederBackground = require('../../assets/images/topBarBg.png');
+const hederBackground = require('../../assets/images/Landscape.png');
 
 const styles = StyleSheet.create({
     tabBarItemContainer: {
@@ -59,67 +63,36 @@ const styles = StyleSheet.create({
 export default createBottomTabNavigator(
     {
         Home: {
-            screen: HomeScreen,
-            navigationOptions: {
-                header: null,
-            },
-        },
-        Calendar: {
-            screen: CalendarScreen,
-            navigationOptions: {
-                header: (
-                    <View style={styles.headerContainer}>
-                        <Image
-                            style={styles.headerImage}
-                            source={hederBackground}
-                        />
-                        <Text style={styles.headerCaption}>Calendar</Text>
-                    </View>
-                ),
-            },
-        },
-        Grids: {
-            screen: GridsScreen,
-            navigationOptions: {
-                header: (
-                    <View style={styles.headerContainer}>
-                        <Image
-                            style={styles.headerImage}
-                            source={hederBackground}
-                        />
-                        <Text style={styles.headerCaption}>Grids</Text>
-                    </View>
-                ),
-            },
-        },
-        Pages: {
             screen: PagesScreen,
-            navigationOptions: {
-                header: (
-                    <View style={styles.headerContainer}>
-                        <Image
-                            style={styles.headerImage}
-                            source={hederBackground}
-                        />
-                        <Text style={styles.headerCaption}>Pages</Text>
-                    </View>
-                ),
-            },
+            defaultNavigationOptions:{header:<View style={[styles.headerContainer,{backgroundColor:'#383A40',flex:1}]}><Text>El Dorito</Text></View>}
+
+
         },
-        Components: {
-            screen: ComponentsScreen,
-            navigationOptions: {
-                header: (
-                    <View style={styles.headerContainer}>
-                        <Image
-                            style={styles.headerImage}
-                            source={hederBackground}
-                        />
-                        <Text style={styles.headerCaption}>Components</Text>
-                    </View>
-                ),
-            },
+        Ordenes: {
+            screen: ConsultarOrdenes,
+            defaultNavigationOptions:{header:<View style={[styles.headerContainer,{backgroundColor:'#383A40',flex:1}]}><Text>El Dorito</Text></View>}
+
+           
         },
+        
+        LogOut: {
+            screen: AuthScreen,
+
+        },
+        // Components: {
+        //     screen: ComponentsScreen,
+        //     navigationOptions: {
+        //         header: (
+        //             <View style={styles.headerContainer}>
+        //                 <Image
+        //                     style={styles.headerImage}
+        //                     source={hederBackground}
+        //                 />
+        //                 <Text style={styles.headerCaption}>Components</Text>
+        //             </View>
+        //         ),
+        //     },
+        // },
     },
     {
         defaultNavigationOptions: ({ navigation }) => ({
@@ -127,6 +100,7 @@ export default createBottomTabNavigator(
             tabBarIcon: ({ focused }) => {
                 const { routeName } = navigation.state;
                 let iconSource;
+                let isPage =false;
                 switch (routeName) {
                     case 'Home':
                         iconSource = iconHome;
@@ -142,11 +116,15 @@ export default createBottomTabNavigator(
                         break;
                     case 'Components':
                         iconSource = iconComponents;
+                      
                         break;
+                    case 'CrearOrden':
+                    iconSource = null;
+                    isPage=true;
                     default:
                         iconSource = iconComponents;
                 }
-                return (
+                return (isPage?null:
                     <View style={styles.tabBarItemContainer}>
                         <Image
                             resizeMode="contain"
@@ -166,12 +144,12 @@ export default createBottomTabNavigator(
         tabBarOptions: {
             showLabel: true,
             style: {
-                backgroundColor: Colors.white,
+                backgroundColor: '#383A40',
                 borderTopWidth: 0.5,
                 borderTopColor: '#d6d6d6',
             },
             labelStyle: {
-                color: Colors.grey,
+                color: 'white',
             },
         },
     },

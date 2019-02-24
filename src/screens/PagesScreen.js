@@ -10,45 +10,48 @@ import {
 import {Entypo as Icon} from '@expo/vector-icons';
 import {Colors, Fonts} from '../constants';
 
-const chartIcon = require('../../assets/images/pages/chart.png');
+const crearOrdenIcon = require('../../assets/images/crearOrdenIcon.png');
 const calendarIcon = require('../../assets/images/pages/calendar.png');
 const chatIcon = require('../../assets/images/pages/chat.png');
-const galleryIcon = require('../../assets/images/pages/gallery.png');
+const consultarOrdenesIcon = require('../../assets/images/consultarOrdenesIcon.png');
 const profileIcon = require('../../assets/images/pages/profile.png');
 
 export default function PagesScreen(props) {
+
+const {navigation:{navigate},authState:{isLoggedIn}} = props
+navigate(isLoggedIn?"app":'notAuth')
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate({routeName: 'Charts'})}
+          onPress={() => props.navigation.navigate({routeName: 'CrearOrden'})}
           style={styles.item}>
           <Image
             resizeMode="contain"
-            source={chartIcon}
+            source={crearOrdenIcon}
             style={styles.itemImage}
           />
-          <Text style={styles.itemText}>Charts</Text>
+          <Text style={styles.itemText}>Crear orden</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate({routeName: 'Gallery'})}
+          onPress={() => props.navigation.navigate({routeName: 'ConsultarOrdenes'})}
           style={styles.item}>
           <Image
             resizeMode="contain"
-            source={galleryIcon}
+            source={consultarOrdenesIcon}
             style={styles.itemImage}
           />
-          <Text style={styles.itemText}>Gallery</Text>
+          <Text style={styles.itemText}>Consultar ordenes</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate({routeName: 'Profile'})}
+          onPress={() => props.navigation.navigate({routeName: 'Despachar orden'})}
           style={styles.item}>
           <Image
             resizeMode="contain"
             source={profileIcon}
             style={styles.itemImage}
           />
-          <Text style={styles.itemText}>Profile</Text>
+          <Text style={styles.itemText}>Despachar orden</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
@@ -90,8 +93,8 @@ export default function PagesScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
-    paddingTop: 10,
+    backgroundColor: 'white',
+    paddingTop: 80,
   },
   row: {
     flexDirection: 'row',
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 120,
     paddingVertical: 20,
-    borderColor: Colors.primaryLight,
+    borderColor: '#383A40',
     borderWidth: 1,
     borderRadius: 5,
     alignItems: 'center',
@@ -110,8 +113,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   itemText: {
-    color: Colors.primary,
+    color: '#383A40',
     fontFamily: Fonts.primary,
+    textAlign: 'center'
   },
   itemImage: {
     height: 35,

@@ -6,14 +6,13 @@ import GridReducer from './grid';
 // ## Generator Reducer Imports
 import GalleryReducer from './gallery';
 import AuthReducer from './auth';
+import CrearOrdenReducer from './CrearOrden';
 
 export default combineReducers({
   navigation: NavigationStateReducer,
   calendar: CalendarReducer,
   grid: GridReducer,
-  // ## Generator Reducers
-
+  orden:CrearOrdenReducer,
   gallery: GalleryReducer,
-
   auth: AuthReducer,
 });

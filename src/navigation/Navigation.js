@@ -4,12 +4,14 @@ import { addNavigationHelpers } from 'react-navigation';
 
 import AuthScreen from '../containers/AuthScreen';
 import AppNavigator from './RootNavigation';
+import MiddleWare from './middleWare';
 
-export default function NavigatorView({ dispatch, navigatorState, authState }) {
-    if (authState.isLoggedIn || authState.hasSkippedLogin) {
-        return <AppNavigator />;
-    }
-    return <AuthScreen />;
+export default function NavigatorView(props) {
+ 
+        return <MiddleWare props={props} />;
+
+        
+
 }
 
 NavigatorView.propTypes = {

@@ -7,14 +7,14 @@ import RootNavigation from './src/containers/Navigation';
 import Colors from './src/constants/Colors';
 import store from './src/reducers/store';
 
+
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
 
-  componentDidMount() {
-    console.disableYellowBox = true;
-    UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+   componentDidMount() {
+   
   }
 
   _loadResourcesAsync = async () => Promise.all([

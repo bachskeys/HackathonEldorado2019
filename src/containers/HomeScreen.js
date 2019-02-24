@@ -7,7 +7,8 @@ import HomeScreen from '../screens/HomeScreen';
 export default compose(
   connect(
     state => ({
-
+      authState: state.auth,
+      navigatorState: state.navigation,
     }),
   ),
   withState('isExtended', 'setIsExtended', false),

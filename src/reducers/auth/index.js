@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { NavigationActions } from 'react-navigation';
+
 // Initial state
 const initialState = {
   isLoggedIn: false,
@@ -7,20 +10,80 @@ const initialState = {
   id: null,
   name: null,
   userToken: null,
+  email:'',
+  password:'',
+  user:{}
 };
 
 // Actions
 const SKIPPED_LOGIN = 'AuthState/SKIP';
 const LOGGED_IN = 'AuthState/LOGGED_IN';
-const PASSED_WALKTHROUGH = 'AuthState/PASSED_WALKTHROUGH';
+const SET_USER = 'AuthState/SET_USER';
 const LOGGED_OUT = 'AuthState/LOGGED_OUT';
+const SET_EMAIL = 'AuthState/SET_EMAIL';
+const SET_PASSWORD = 'AuthState/SET_PASSWORD';
+const RESET_STATE = 'AuthState/RESET_STATE';
+const SET_APP_ON_LOGIN = 'AuthState/SET_APP_ON_LOGIN';
+const LOG_IN_FAIL = 'AuthState/LOG_IN_FAIL';
+export const logInAsync =  (userData) => async dispatch => {
+const navigateToApp = NavigationActions.navigate({ routeName: 'Home'});
+console.log('que rollo perra',userData);
+let postData = JSON.stringify(userData)
+let headers = { 
+  'Accept': 'application/json',
+  'Content-Type': 'application/json'
+}
+ fetch('https://shipment-monitoring.herokuapp.com/api/agent/login',
+{method:"POST",headers:headers,body:postData})
+.then(res=>{console.log('response in redux',res['_bodyInit'])
+let resJson = JSON.parse(res['_bodyInit'])
+if(resJson.msj==='Credenciales incorrectas'){
 
+}else{
+  dispatch({type:SET_USER,user:resJson})
+}
+})
+.catch(e=>console.log('error',e))
+
+
+
+}
+
+
+export function resetState(){
+  return{
+    type:RESET_STATE
+  }
+}
+export function loginFail(){
+  return{
+    type:LOG_IN_FAIL
+  }
+}
+export function setAppOnLogIn(){
+  return{
+    type:SET_APP_ON_LOGIN
+  }
+}
 // Action creators
 export function loggedIn(userData) {
-  return {
-    type: LOGGED_IN,
-    payload: userData,
-  };
+ return {
+   type:LOGGED_IN,
+   userData
+ }
+}
+
+export function setEmail(email){
+  return{
+    type:SET_EMAIL,
+    email
+  }
+}
+export function setPassword(password){
+  return{
+    type:SET_PASSWORD,
+    password
+  }
 }
 
 export function skipLogin() {
@@ -29,9 +92,10 @@ export function skipLogin() {
   };
 }
 
-export function passedWalkthrough() {
+export function setUser(user) {
   return {
-    type: PASSED_WALKTHROUGH,
+    type: SET_USER,
+    user
   };
 }
 
@@ -54,29 +118,33 @@ export default function AuthStateReducer(state = initialState, action = {}) {
       });
     case SKIPPED_LOGIN:
       return Object.assign({}, state, {
-        isLoggedIn: false,
+        isLoggedIn: true,
         hasSkippedLogin: true,
         id: null,
         name: null,
         hasPassedWalkthrough: state.hasPassedWalkthrough,
       });
-    case PASSED_WALKTHROUGH:
+    case SET_USER:
       return Object.assign({}, state, {
-        isLoggedIn: false,
-        hasSkippedLogin: false,
-        id: null,
-        name: null,
-        hasPassedWalkthrough: true,
+        isLoggedIn: true,
+         user:action.user
+        
       });
     case LOGGED_OUT:
       return Object.assign({}, state, {
-        isLoggedIn: false,
-        hasSkippedLogin: false,
-        loggedOut: true,
-        hasPassedWalkthrough: state.hasPassedWalkthrough,
-        id: null,
-        name: null,
+        isLoggedIn: false
       });
+    case SET_EMAIL:
+    return Object.assign({}, state, {
+      email: action.email
+    });
+    case SET_PASSWORD:
+    return Object.assign({}, state, {
+      password: action.password
+    });
+
+    case RESET_STATE:
+    return Object.assign({}, state, initialState)
     default:
       return state;
   }
