@@ -14,7 +14,8 @@ const crearOrdenIcon = require('../../assets/images/crearOrdenIcon.png');
 const calendarIcon = require('../../assets/images/pages/calendar.png');
 const chatIcon = require('../../assets/images/pages/chat.png');
 const consultarOrdenesIcon = require('../../assets/images/consultarOrdenesIcon.png');
-const profileIcon = require('../../assets/images/pages/profile.png');
+const sensorIcon = require('../../assets/images/sensor.png');
+const goodShip = require('../../assets/images/good-ship.png');
 
 export default function PagesScreen(props) {
 
@@ -34,58 +35,27 @@ navigate(isLoggedIn?"app":'notAuth')
           <Text style={styles.itemText}>Crear orden</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate({routeName: 'ConsultarOrdenes'})}
+          onPress={() => props.navigation.navigate({routeName: 'WebView'})}
           style={styles.item}>
           <Image
             resizeMode="contain"
-            source={consultarOrdenesIcon}
+            source={sensorIcon}
             style={styles.itemImage}
           />
           <Text style={styles.itemText}>Consultar Dispositivo</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate({routeName: 'WebView'})}
+          onPress={() => props.navigation.navigate({routeName: 'OrdenesActivas'})}
           style={styles.item}>
           <Image
             resizeMode="contain"
-            source={profileIcon}
+            source={goodShip}
             style={styles.itemImage}
           />
-          <Text style={styles.itemText}>Despachar orden</Text>
+          <Text style={styles.itemText}>Embarques Activos</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.row}>
-        <TouchableOpacity
-          onPress={() => props.navigation.navigate({routeName: 'Chat'})}
-          style={styles.item}>
-          <Image
-            resizeMode="contain"
-            source={chatIcon}
-            style={styles.itemImage}
-          />
-          <Text style={styles.itemText}>Chats</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => props.navigation.navigate({routeName: 'Calendar'})}
-          style={styles.item}>
-          <Image
-            resizeMode="contain"
-            source={calendarIcon}
-            style={styles.itemImage}
-          />
-          <Text style={styles.itemText}>Calendar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={props.authStateActions.loggedOut}
-          style={styles.item}>
-          <Image
-            resizeMode="contain"
-            source={profileIcon}
-            style={styles.itemImage}
-          />
-          <Text style={styles.itemText}>Login</Text>
-        </TouchableOpacity>
-      </View>
+     
     </View>
   );
 }

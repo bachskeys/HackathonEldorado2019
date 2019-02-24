@@ -28,7 +28,9 @@ const FORM_STATES = {
 
 export default class ConsultarOrdenes extends React.Component {
   state = {
-  
+    anim: new Animated.Value(0),
+    formState: FORM_STATES.LOGIN,
+    isKeyboardVisible: false,
     data:[]
   };
 
@@ -36,8 +38,6 @@ export default class ConsultarOrdenes extends React.Component {
     return await this.loadDataAsync();
    
   }
-
-
   componentWillReceiveProps(prevProps){
       if(prevProps.navigation.state.params!==this.props.navigation.state.params){
           console.log('reRender');
@@ -47,7 +47,7 @@ export default class ConsultarOrdenes extends React.Component {
   }
 
   loadDataAsync = async () =>{
-    await fetch('https://shipment-monitoring.herokuapp.com/api/shipment/get-all')
+    await fetch('https://shipment-monitoring.herokuapp.com/api/shipment/get-complete')
     .then(res=>{console.log('response in redux',res['_bodyInit'])
     let response=JSON.parse(res['_bodyInit']);
         this.setState({data:response})
@@ -70,7 +70,7 @@ export default class ConsultarOrdenes extends React.Component {
 <ScrollView>
 
     <View style={[styles.container]} >
-    <Text style={{fontSize: 18, marinTop:5}}>Embarques sin despachar</Text>
+    <Text style={{fontSize: 18, marinTop:5}}>Embarques Activos</Text>
     {/* <View
         style={{
           alignSelf:'center',
@@ -87,7 +87,7 @@ return  <View>
         secondary
         style={styles.item}
         caption={item.folio+' - '+Moment(item.created_at).format('DD MMM HH:mm')}
-        onPress={()=>this.handleButton(item.folio)}
+        onPress={()=>this.props.navigation.navigate('WebView')}
         />
         </View>
  })}

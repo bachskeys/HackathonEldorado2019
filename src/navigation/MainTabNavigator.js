@@ -15,11 +15,13 @@ import LogOutBtn from '../components/LogOutBtn';
 import CrearOrden from '../containers/CrearOrdenScreen';
 import ConsultarOrdenes from '../containers/ConsultarOrdenes';
 
-const iconHome = require('../../assets/images/tabbar/home.png');
+const iconHome = require('../../assets/images/Home-icon.png');
 const iconCalendar = require('../../assets/images/tabbar/calendar.png');
 const iconGrids = require('../../assets/images/tabbar/grids.png');
 const iconPages = require('../../assets/images/tabbar/pages.png');
 const iconComponents = require('../../assets/images/tabbar/components.png');
+const ordenesIcon = require('../../assets/images/ordenes2.png');
+const logOutICon =  require('../../assets/images/Logout-icon.png');
 
 const hederBackground = require('../../assets/images/Landscape.png');
 
@@ -36,9 +38,7 @@ const styles = StyleSheet.create({
         width: 23,
         height: 23,
     },
-    tabBarIconFocused: {
-        tintColor: Colors.primary,
-    },
+   
     headerContainer: {
         height: 70,
         alignItems: 'center',
@@ -108,14 +108,14 @@ export default createBottomTabNavigator(
                     case 'Calendar':
                         iconSource = iconCalendar;
                         break;
-                    case 'Grids':
-                        iconSource = iconGrids;
+                    case 'Ordenes':
+                        iconSource = ordenesIcon;
                         break;
                     case 'Pages':
                         iconSource = iconPages;
                         break;
-                    case 'Components':
-                        iconSource = iconComponents;
+                    case 'LogOut':
+                        iconSource = logOutICon;
                       
                         break;
                     case 'CrearOrden':

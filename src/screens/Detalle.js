@@ -83,7 +83,9 @@ _handleDespacho = () =>{
       console.log('looking up',data);
        fetch('https://shipment-monitoring.herokuapp.com/api/shipment/update/state/departure',
       {method:"POST",headers:headers,body:postData})
-      .then(res=>{console.log('response in redux',res['_bodyInit'])})
+      .then(res=>{console.log('response in redux',res['_bodyInit'])
+     this.props.navigation.navigate('OrdenesActivas')
+    })
     
      
 }

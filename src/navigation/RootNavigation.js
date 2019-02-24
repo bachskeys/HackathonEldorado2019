@@ -16,6 +16,7 @@ import { Colors, Fonts } from '../constants';
 import CrearOrden from '../containers/CrearOrdenScreen';
 import Detalle from '../containers/Detalle';;
 import WebViewComponent from '../containers/WebView';
+import OrdenesActivas from '../containers/OrdenesActivas';
 
 const headerBackground = require('../../assets/images/Landscape.png');
 
@@ -87,10 +88,29 @@ const auth = createStackNavigator(
         },
         WebView: {
             screen: WebViewComponent,
-            navigationOptions: {
-                header: null,
-            },
+            navigationOptions: ({ navigation }) => {
+                return {
+                    title: 'Embarques',
+                    headerLeft: null,
+                    headerBackground: (
+                        <View style={{backgroundColor:'#383A40',height:80}}><Text style={{color:'white'}}>Embarques</Text></View>
+                    ),
+                };
+            },    
         },
+        OrdenesActivas: {
+            screen: OrdenesActivas,
+            navigationOptions: ({ navigation }) => {
+                return {
+                    title: 'Embarques',
+                    headerLeft: null,
+                    headerBackground: (
+                        <View style={{backgroundColor:'#383A40',height:80}}><Text style={{color:'white'}}>Embarques</Text></View>
+                    ),
+                };
+            },    
+        },
+        // Ga
         // Ga
         // Gallery: {
         //     screen: GalleryScreen,
