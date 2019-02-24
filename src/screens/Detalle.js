@@ -30,31 +30,64 @@ export default class ConsultarOrdenes extends React.Component {
     anim: new Animated.Value(0),
     formState: FORM_STATES.LOGIN,
     isKeyboardVisible: false,
-    data:[]
+    data:[],
+    shipment_id:0,
   };
 
  async componentWillMount() {
    const {navFolio} = this.props.navigation.state.params;
    const toFilterArray=this.props.ordenState.allOrders;
+ 
    const FilteredArray=toFilterArray[0].filter((item)=>{
     //   console.log('comparing',navFolio,'',item)
        return item.folio===navFolio
     });
-    this.setState({detalle:FilteredArray[0]})
+    this.setState({detalle:FilteredArray[0]},()=>{
+
+        this.setState({shipment_id:this.state.detalle.status_shipment_id})
+    })
     await fetch('https://shipment-monitoring.herokuapp.com/api/shippment/drivers-devices/available')
     .then(res=>{console.log('response in redux',res['_bodyInit'])
     let response=JSON.parse(res['_bodyInit']);
-        this.setState({drivers:response.drivers,devices:response.devices})
+        this.setState({drivers:response.drivers,devices:response.devices},()=>{
+            this.setState({driver_id:this.state.drivers[0].id,device_id:this.state.devices[0].id})
+        })
+        
     })
     console.log('Checking the props in detail',FilteredArray[0]);
     console.log('checking state int component wil unmount',this.state);
-   
-
-
- 
   }
 
-  
+  _handleDriver = (item) =>{
+    this.setState({driver_id:item},()=>{
+        console.log('checking for state changes',this.state.driver_id);
+    })
+  }
+  _handleDevice = (item) =>{
+    this.setState({device_id:item},()=>{
+        console.log('checking for state changes',this.state.device_id);
+    })
+      }
+
+_handleDespacho = () =>{
+    let headers = { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+      let data = {
+          shipment_id:this.state.shipment_id,
+          driver_id:this.state.driver_id,
+          device_id:this.state.device_id
+      }
+      let postData = JSON.stringify(data)
+      console.log('looking up',data);
+       fetch('https://shipment-monitoring.herokuapp.com/api/shipment/update/state/departure',
+      {method:"POST",headers:headers,body:postData})
+      .then(res=>{console.log('response in redux',res['_bodyInit'])})
+    
+     
+}
+     
  
   render() {
 
@@ -95,9 +128,10 @@ export default class ConsultarOrdenes extends React.Component {
     <View >
     <Text style={{marginLeft:200,marginTop:30}}>Seleccione a un chofer</Text>
     <Picker
-       selectedValue={this.state.selectedCategory}
+       selectedValue={this.state.selectedDriver}
        style={{height: 50, width: 400,marginLeft:120,borderColor:'black',color:'black'}}
-    //    onValueChange={(item)=>{this._handleCategory(item),this.setState({selectedCategory:item})}}>
+       onValueChange={(item)=>{this._handleDriver(item) 
+        this.setState({selectedDriver:item})}}
     >
        {this.state.drivers?this.state.drivers.map(item=><Picker.Item label={item.name} value={item.id} />):null}
      </Picker>
@@ -105,13 +139,23 @@ export default class ConsultarOrdenes extends React.Component {
      <View >
     <Text style={{marginLeft:200,marginTop:30}}>Seleccione a un dispositivo</Text>
     <Picker
-       selectedValue={this.state.selectedCategory}
+       selectedValue={this.state.selectedDevice}
        style={{height: 50, width: 400,marginLeft:120,borderColor:'black',color:'black'}}
-    //    onValueChange={(item)=>{this._handleCategory(item),this.setState({selectedCategory:item})}}>
+       onValueChange={(item)=>{this._handleDevice(item) 
+        this.setState({selectedDevice:item})}}
     >
        {this.state.devices?this.state.devices.map(item=><Picker.Item label={item.device_name} value={item.id} />):null}
      </Picker>
      </View>
+     <Button
+          rounded
+          secondary
+          style={{  marginTop: 10 }}
+          caption={ 'Despachar' }
+          onPress={this._handleDespacho}
+        
+        />
+
 </View>
 
     );
