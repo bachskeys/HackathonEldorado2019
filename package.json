@@ -8,7 +8,7 @@
     "lint": "./node_modules/eslint/bin/eslint.js src",
     "lint-fix": "./node_modules/eslint/bin/eslint.js src --fix",
     "flow": "./node_modules/.bin/flow src",
-     "generate":"node plopfile.js"
+    "generate": "node plopfile.js"
   },
   "jest": {
     "preset": "jest-expo",

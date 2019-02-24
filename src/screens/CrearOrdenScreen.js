@@ -182,23 +182,44 @@ handleCantidad = (e) =>{
  
      <Animated.View style={[styles.section, styles.middle, this.fadeIn(700, -20)]}>
      <View style={styles.middle}>
-     <Text style={{marginRight:20,textAlign:'center'}}>Seleccione el Destino</Text>
+     <Text style={{fontSize: 18,textAlign:'center'}}>Seleccione el Destino</Text>
+     <View
+        style={{
+          alignSelf:'center',
+          borderBottomColor: 'black',
+          borderBottomWidth: 1,
+          width: '60%'
+        }}
+      />
      <View style={styles2.row}>
-   
+ 
        <Picker
        selectedValue={this.state.selectedDestino}
-       style={{height: 50, width: 400,marginLeft:120,borderColor:'white',color:'white'}}
+       style={{height: 50, width: '100%',borderColor:'black',color:'black',textAlign:'center', marginBottom:20}}
        onValueChange={(item)=>{ this._handleDestino(item), this.setState({selectedDestino:item})}
    }>
    {whereHousesObject.map(item=><Picker.Item label={item.name} value={item.name} />)}
      </Picker>
       </View>
-      <Text style={{marginLeft:30}}>Seleccione la categoria de el producto a enviar</Text>
+      <Text style={{textAlign:'center', fontSize: 18}}>Seleccione el producto a enviar</Text>
+      <View
+        style={{
+          alignSelf:'center',
+          borderBottomColor: 'black',
+          borderBottomWidth: 1,
+          width: '60%'
+        }}
+      />
      <View style={styles2.row}>
-   
-       <Picker
+     {/* <View
+        style={{
+          borderBottomColor: 'black',
+          borderBottomWidth: 1,
+        }}
+      /> */}
+            <Picker
        selectedValue={this.state.selectedCategory}
-       style={{height: 50, width: 400,marginLeft:120,borderColor:'white',color:'white'}}
+       style={{height: 50, width: '100%',color:'black',marginBottom:20, textAlign: 'center'}}
        onValueChange={(item)=>{this._handleCategory(item),this.setState({selectedCategory:item})}}>
        {products.map(item=><Picker.Item label={item.product} value={item.product} />)}
      </Picker>
@@ -206,10 +227,11 @@ handleCantidad = (e) =>{
      
 
       </View>
-     
+        <Text style={{textAlign:'center', fontSize: 18}}>Cantidad:</Text>
       </View>
-      <View style={{width:150,textAlign:'center'}}>
-      <TextInput style={{textAlign:'center'}}
+      <View style={{width:'80%',textAlign:'center'}}>
+      <TextInput style={{textAlign:'center', color:'black',borderBottomColor: 'black',
+        borderBottomWidth: 1}}
         textBreakStrategy='simple'
         placeholder="cantidad"
         keyboardType='numeric'
@@ -250,7 +272,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
     paddingHorizontal: 10,
-    backgroundColor:'#383A40'
+    backgroundColor:'white'
   },
   section: {
     flex: 1,
