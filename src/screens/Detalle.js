@@ -44,7 +44,7 @@ export default class ConsultarOrdenes extends React.Component {
     });
     this.setState({detalle:FilteredArray[0]},()=>{
 
-        this.setState({shipment_id:this.state.detalle.status_shipment_id})
+        this.setState({shipment_id:this.state.detalle.id})
     })
     await fetch('https://shipment-monitoring.herokuapp.com/api/shippment/drivers-devices/available')
     .then(res=>{console.log('response in redux',res['_bodyInit'])
